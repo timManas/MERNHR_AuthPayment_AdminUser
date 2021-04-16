@@ -2,6 +2,8 @@ import path from 'path'
 import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import morgan from 'morgan'
+import productRoutes from './productRoutes.js'
 
 // Initialize Dot Env File
 dotenv.config()
@@ -26,6 +28,13 @@ const connectDB = async () => {
 
 // Connect Backend to MongoDB
 connectDB()
+
+// Run Morgan in developmenet Mode
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'))
+}
+
+app.use('/api/products', productRoutes)
 
 // Make the upload folder static, Add new docs
 const __dirname = path.resolve()
