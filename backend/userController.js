@@ -21,3 +21,17 @@ export const authUser = asyncHandler(async (req, res) => {
     res.json({ error: 'User not found' })
   }
 })
+
+export const getUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findOne(req.user._id)
+  if (user) {
+    res.json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    })
+  } else {
+    res.status(401)
+  }
+})
