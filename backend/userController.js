@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import User from './userModel.js'
+import generateToken from './generateToken.js'
 
 export const authUser = asyncHandler(async (req, res) => {
   // Authorize user via email
@@ -12,7 +13,7 @@ export const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      //   token: generateToken(user._id),
+      token: generateToken(user._id),
     })
   } else {
     console.log('NOT Authenticated')
