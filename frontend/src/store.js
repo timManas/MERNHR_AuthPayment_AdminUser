@@ -5,12 +5,13 @@ import {
   productListReducer,
   productDetailsReducer,
 } from './reducers/productReducers'
-import { loginReducer } from './reducers/userReducers'
+import { loginReducer, userRegisterReducer } from './reducers/userReducers'
 
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
   userLogin: loginReducer,
+  userRegister: userRegisterReducer,
 })
 
 // Fethc user info from localStorage if ANY
