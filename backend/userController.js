@@ -35,3 +35,27 @@ export const getUserProfile = asyncHandler(async (req, res) => {
     res.status(401)
   }
 })
+
+export const registerUser = asyncHandler(async (req, res) => {
+  // Authorize user via email
+  const { name, email, password } = req.body
+
+  const userExist = await User.findOne({ email })
+  if (userExist) {
+    res.send(401)
+    res.send('User already exists')
+    throw new Error('User Already exists')
+  }
+
+  const user = await User.create({ name, email, password })
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    })
+  } else {
+    res.status(400)
+    throw new Error('Unable to add new user')
+  }
+})
