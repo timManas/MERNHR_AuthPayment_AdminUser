@@ -5,13 +5,20 @@ import {
   productListReducer,
   productDetailsReducer,
 } from './reducers/productReducers'
+import { loginReducer } from './reducers/userReducers'
 
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
+  userLogin: loginReducer,
 })
 
-const initialState = {}
+// Fethc user info from localStorage if ANY
+const userInfoFromStorage = localStorage.getItem('userInfo')
+  ? JSON.parse(localStorage.getItem('userInfo'))
+  : null
+
+const initialState = { userLogin: { userInfo: userInfoFromStorage } }
 
 const middleware = [thunk]
 
