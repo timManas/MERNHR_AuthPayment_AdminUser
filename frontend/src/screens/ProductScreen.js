@@ -5,6 +5,8 @@ import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import { productDetails } from '../actions/productActions'
 
 const ProductScreen = ({ history, match }) => {
+  const [qty, setQty] = useState('')
+
   const dispatch = useDispatch()
   const { product } = useSelector((state) => state.productDetails)
   console.log('Product Details: ' + JSON.stringify(product))
@@ -12,6 +14,8 @@ const ProductScreen = ({ history, match }) => {
   useEffect(() => {
     dispatch(productDetails(match.params.id))
   }, [dispatch])
+
+  const addToCartHandler = () => {}
 
   return (
     <>
@@ -53,7 +57,7 @@ const ProductScreen = ({ history, match }) => {
                   </Col>
                 </Row>
               </ListGroup.Item>
-              {/* {product.countInStock > 0 && (
+              {product.countInStock > 0 && (
                 <ListGroup.Item>
                   <Row>
                     <Col>Qty</Col>
@@ -83,7 +87,7 @@ const ProductScreen = ({ history, match }) => {
                 >
                   Add To Cart
                 </Button>
-              </ListGroup.Item> */}
+              </ListGroup.Item>
             </ListGroup>
           </Card>
         </Col>
