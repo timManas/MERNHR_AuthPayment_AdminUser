@@ -27,6 +27,10 @@ export const cartItemsReducer = (state = { cartItems: [] }, action) => {
 
     case CART_REMOVE_ITEM:
     case CART_SAVE_PAYMENT_METHOD:
+      return {
+        ...state,
+        shippingAddress: action.payload,
+      }
     case CART_SAVE_SHIPPING_ADDRESS:
     default:
       return state
