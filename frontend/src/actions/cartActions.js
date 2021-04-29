@@ -29,5 +29,10 @@ export const removeFromCart = (id, qty) => async (dispatch) => {}
 
 export const saveShippingAddress = (data) => (dispatch, getState) => {
   dispatch({ type: CART_SAVE_SHIPPING_ADDRESS, payload: data })
-  localStorage.setItem('paymentMethod', JSON.stringify(data))
+  localStorage.setItem('shippingAddress', JSON.stringify(data))
+}
+
+export const savePaymentMethod = (paymentMethod) => (dispatch) => {
+  dispatch({ type: CART_SAVE_PAYMENT_METHOD, payload: paymentMethod })
+  localStorage.setItem('paymentMethod', JSON.stringify(paymentMethod))
 }
