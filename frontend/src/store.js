@@ -6,12 +6,14 @@ import {
   productDetailsReducer,
 } from './reducers/productReducers'
 import { loginReducer, userRegisterReducer } from './reducers/userReducers'
+import { cartItemsReducer } from './reducers/cartReducers'
 
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
   userLogin: loginReducer,
   userRegister: userRegisterReducer,
+  cart: cartItemsReducer,
 })
 
 // Fethc user info from localStorage if ANY
@@ -19,7 +21,17 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null
 
-const initialState = { userLogin: { userInfo: userInfoFromStorage } }
+// Fetch items from localStore if ANY
+const cartItemsFromStorage = localStorage.getItem('cartItems')
+  ? JSON.parse(localStorage.getItem('cartItems'))
+  : []
+
+const initialState = {
+  cart: {
+    cartItems: cartItemsFromStorage,
+  },
+  userLogin: { userInfo: userInfoFromStorage },
+}
 
 const middleware = [thunk]
 

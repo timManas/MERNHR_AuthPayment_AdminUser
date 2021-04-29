@@ -5,17 +5,18 @@ import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import { productDetails } from '../actions/productActions'
 
 const ProductScreen = ({ history, match }) => {
-  const [qty, setQty] = useState('')
+  const [qty, setQty] = useState(1) // Minimum should be one
 
   const dispatch = useDispatch()
   const { product } = useSelector((state) => state.productDetails)
-  console.log('Product Details: ' + JSON.stringify(product))
 
   useEffect(() => {
     dispatch(productDetails(match.params.id))
   }, [dispatch])
 
-  const addToCartHandler = () => {}
+  const addToCartHandler = () => {
+    history.push(`/cart/${match.params.id}?qty=${qty}`)
+  }
 
   return (
     <>
