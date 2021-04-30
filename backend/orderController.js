@@ -2,8 +2,11 @@ import expressAsyncHandler from 'express-async-handler'
 import asyncHandler from 'express-async-handler'
 import Order from './orderModel.js'
 
-export const addOrderItems = expressAsyncHandler(async (req, res) => {
-  // GOAL, add this list to the Database
+// @desc    Fetch new order
+// @route   POST /api/order
+// @access  Private
+
+const addOrderItems = asyncHandler(async (req, res) => {
   const {
     orderItems,
     shippingAddress,
@@ -14,14 +17,16 @@ export const addOrderItems = expressAsyncHandler(async (req, res) => {
     totalPrice,
   } = req.body
 
-  if (orderItems && orderItems.length == 0) {
+  // Return Error is orderItems is empty
+  if (orderItems && orderItems.length === 0) {
     res.status(400)
-    throw new Error('No Order Items')
+    throw new Error('No Order Item')
     return
   } else {
+    // Create new order
     const order = new Order({
       orderItems,
-      user: req.user._id,
+      user: req.user._id, // Add user as well
       shippingAddress,
       paymentMethod,
       itemsPrice,
@@ -30,7 +35,12 @@ export const addOrderItems = expressAsyncHandler(async (req, res) => {
       totalPrice,
     })
 
-    const createOrder = await order.save() // Adds orders to DB
+    console.log('Order: ' + JSON.stringify(order))
+
+    // Save to DB
+    const createOrder = await order.save()
     res.status(201).json(createOrder)
   }
 })
+
+export { addOrderItems }

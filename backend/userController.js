@@ -1,19 +1,26 @@
 import asyncHandler from 'express-async-handler'
 import User from './userModel.js'
 import generateToken from './generateToken.js'
+import { token } from 'morgan'
 
 export const authUser = asyncHandler(async (req, res) => {
-  // Authorize user via email
   const { email, password } = req.body
+  console.log(`EmailPassowrd: ${email}    ${password}`)
   const user = await User.findOne({ email })
-
+  console.log(`UserExists: ${JSON.stringify(user)}}`)
+  console.log(
+    `PasswordMatch: ${JSON.stringify(await user.matchPassword(password))}}`
+  )
   if (user && (await user.matchPassword(password))) {
+    console.log('Authenticated')
+    const tokenGen = generateToken(user._id)
+    console.log('Token: ' + tokenGen)
     res.json({
       _id: user._id,
       name: user.name,
-      email: user.email,
+      email: user.password,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id),
+      token: tokenGen,
     })
   } else {
     console.log('NOT Authenticated')

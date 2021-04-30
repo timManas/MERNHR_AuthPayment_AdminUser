@@ -20,10 +20,17 @@ import {
   ORDER_DELIVER_FAIL,
 } from '../constants/orderConstants'
 
+// Creates an Order Action
 export const createOrder = (order) => async (dispatch, getState) => {
   try {
-    dispatch({ type: ORDER_CREATE_REQUEST })
-    const { userLogin: userInfo } = getState()
+    dispatch({
+      type: ORDER_CREATE_REQUEST,
+    })
+
+    // Destructure twice to get the userInfo
+    const {
+      userLogin: { userInfo },
+    } = getState()
 
     // Pass token here
     const config = {
@@ -33,9 +40,14 @@ export const createOrder = (order) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = axios.post('/api/orders', order, config)
+    // Send POST request of user by name/username/password
+    const { data } = await axios.post(`/api/orders`, order, config)
 
-    dispatch({ type: ORDER_CREATE_SUCCESS, payload: data })
+    // Dispatch and send to Reducer
+    dispatch({
+      type: ORDER_CREATE_SUCCESS, // Successfully creates Order
+      payload: data,
+    })
   } catch (error) {
     // If fetching data was not succesful
     dispatch({

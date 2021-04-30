@@ -6,21 +6,23 @@ import CheckoutSteps from '../components/CheckoutSteps'
 import { saveShippingAddress } from '../actions/cartActions'
 
 const ShippingScreen = ({ history }) => {
-  const dispatch = useDispatch()
-
+  // Fetches the shipping address from local storage if any
   const cart = useSelector((state) => state.cart)
   const { shippingAddress } = cart
-  console.log('shippingAddress: ' + JSON.stringify(shippingAddress))
 
   const [address, setAddress] = useState(shippingAddress.address)
   const [city, setCity] = useState(shippingAddress.city)
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode)
   const [country, setCountry] = useState(shippingAddress.country)
 
+  // Create dispatch
+  const dispatch = useDispatch()
+
   const submitHandler = (e) => {
-    e.preventDefault()
+    e.preventDefault() // Need to call this since its a form
     dispatch(saveShippingAddress({ address, city, postalCode, country }))
 
+    // After disaptching we move to the next page
     history.push('/payment')
   }
 
