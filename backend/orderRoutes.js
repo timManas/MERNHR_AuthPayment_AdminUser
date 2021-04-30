@@ -1,11 +1,29 @@
 import express from 'express'
-import Order from './orderModel.js'
-import asyncHandler from 'express-async-handler'
+import {
+  addOrderItems,
+  getOrderById,
+  updateOrderToPaid,
+  updateOrderToDelivered,
+  getMyOrders,
+  getOrders,
+} from './orderController.js'
 import { protect, admin } from './authMiddleware.js'
-import { addOrderItems } from './orderController.js'
 
 const router = express.Router()
 
-router.route('/').post(protect, addOrderItems)
+// POST - Order Items || GET all orders for Admin
+router.route('/').post(protect, addOrderItems).get(protect, admin, getOrders) // calls addOrderItems when we get a '/' post request
+
+// GET - myOrders
+router.route('/myorders').get(protect, getMyOrders) // Gets the order by id
+
+// GET - Order Id
+router.route('/:id').get(protect, getOrderById) // Gets the order by id
+
+// PUT - Updates Order after payment
+router.route('/:id/pay').put(protect, updateOrderToPaid) // Gets the order by id
+
+// PUT - Updates Order after delievered
+router.route('/:id/deliver').put(protect, admin, updateOrderToDelivered) // Route order for delivery
 
 export default router

@@ -7,7 +7,15 @@ import {
 } from './reducers/productReducers'
 import { loginReducer, userRegisterReducer } from './reducers/userReducers'
 import { cartItemsReducer } from './reducers/cartReducers'
-import { orderCreateReducer } from './reducers/orderReducers'
+
+import {
+  orderCreateReducer,
+  orderDetailsReducer,
+  orderPayReducer,
+  orderDeliverReducer,
+  orderListMyReducer,
+  orderListReducer,
+} from './reducers/orderReducers'
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -16,6 +24,11 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   cart: cartItemsReducer,
   orderCreate: orderCreateReducer,
+  orderDetails: orderDetailsReducer,
+  orderPay: orderPayReducer,
+  orderDeliver: orderDeliverReducer,
+  orderListMy: orderListMyReducer,
+  orderList: orderListReducer,
 })
 
 // Fetch items from localStore if ANY
