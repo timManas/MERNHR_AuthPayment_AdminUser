@@ -7,6 +7,7 @@ import {
 } from './reducers/productReducers'
 import { loginReducer, userRegisterReducer } from './reducers/userReducers'
 import { cartItemsReducer } from './reducers/cartReducers'
+import { orderCreateReducer } from './reducers/orderReducers'
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   userLogin: loginReducer,
   userRegister: userRegisterReducer,
   cart: cartItemsReducer,
+  orderCreate: orderCreateReducer,
 })
 
 // Fethc user info from localStorage if ANY
